@@ -1,7 +1,9 @@
 ##Introduce
+
 This is a simple bus library by Android's broadcast. We can use it very convenient. Send and receive messages are marked by class name, which is in line with our actual engineering application.
 
 ##How to use
+
 ###1.Add the library to your project
 ```java
 compile files('libs/broadcastbus-1.0.jar')
@@ -39,10 +41,12 @@ broadcastBus.unRegister();
 You must unregister the bus event when is not used.
 
 ##Feedback
+
 You Have any questions and questions in the process of using to send the email to me.
 
 * e-mail : zgkxzx@163.com
 * QQ:  514011021
 
 ##Me&Throught
+
 Simple is not simple.
