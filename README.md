@@ -49,4 +49,4 @@ You Have any questions and questions in the process of using to send the email t
 
 ## Me&Throught
 
-### Simple is not simple.
+### Simplicity is not simple.
