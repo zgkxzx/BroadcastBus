@@ -73,8 +73,13 @@ public class BroadcastBus {
         public void onReceive(Context context, Intent intent) {
             for (Map.Entry<Class<?>, OnEventReceive> event : eventMap.entrySet()) {
                 Class<?> key = event.getKey();
-                if (key.isInstance(intent.getSerializableExtra(key.getName())))
-                    event.getValue().onEvent(intent.getSerializableExtra(key.getName()));
+                if (key == null)
+                    return;
+                if (key.isInstance(intent.getSerializableExtra(key.getName()))) {
+                    OnEventReceive onEventReceive = event.getValue();
+                    if (onEventReceive != null)
+                        onEventReceive.onEvent(intent.getSerializableExtra(key.getName()));
+                }
             }
 
         }

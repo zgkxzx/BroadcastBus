@@ -7,11 +7,7 @@ import android.view.View;
 
 import com.zgkxzx.lib.broadcastbus.BroadcastBus;
 
-/**
- * 创建者 zgkxzx
- * 日期   5/25/17
- * 描述
- */
+
 
 public class SecondActivity extends AppCompatActivity {
     private final static String TAG = SecondActivity.class.getSimpleName();
