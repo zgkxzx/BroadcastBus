@@ -1,6 +1,6 @@
 ### Introduce
 
-This is a simple bus library based on android broadcast. We can use it very convenient. Send and receive messages are marked by class name, which is in line with our actual engineering application.
+This is a simple bus library based on android broadcast. We can use it very convenient.Messages that sent and received are marked by class name, which is in line with our actual engineering application.
 
 ### How to use
 
@@ -36,7 +36,7 @@ eventMap.put(UserInfoEvent.class, new OnEventReceive<UserInfoEvent>() {
 //register a bus event       
 broadcastBus.register(eventMap);
 ```
-Between,the UseInfoEvent extends BaseEvent,and implement the Serializable.
+Between,the UseInfoEvent class extends the BaseEvent class,and implement the Serializable interface.
 
 #### 5.Send the bus event
 ```java
@@ -58,8 +58,8 @@ You must unregister the bus event when is not used.
 
 You Have any questions and questions in the process of using to send the email to me.
 
-* e-mail : zgkxzx@163.com
-* QQ    :  514011021
+* email : zgkxzx@163.com
+* gmail : my.own.diy@gmail.com
 
 ### Me & Throught
 
