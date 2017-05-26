@@ -13,14 +13,14 @@ import java.util.Map;
 /**
  * Author       zgkxzx
  * Date         5/24/17
- * Discripter   this is a simple bus based android broadcast
+ * Discripter   This is a simple bus based on android broadcast
  */
 
 public class BroadcastBus {
     private final static String TAG = BroadcastBus.class.getSimpleName();
 
     private WeakReference<Context> contextRef;
-    private Map<Class<?>, OnEventReceive> eventMap = new HashMap<>();
+    private Map<Class<? extends BaseEvent>, OnEventReceive> eventMap = new HashMap<>();
     private boolean isRegister = false;
 
     public BroadcastBus(Context context) {
@@ -32,11 +32,27 @@ public class BroadcastBus {
      *
      * @param baseEvent the send event
      */
-    public void post(BaseEvent baseEvent) {
+    public synchronized void post(BaseEvent baseEvent) {
         Intent intent = new Intent(baseEvent.getClass().getName());
         intent.putExtra(baseEvent.getClass().getName(), baseEvent);
         if (contextRef.get() != null)
             contextRef.get().sendBroadcast(intent);
+    }
+
+    /**
+     * register bus for a listener
+     *
+     * @param clazz          the type of event
+     * @param onEventReceive the listener of the event
+     */
+    public synchronized <T extends BaseEvent> void register(Class<T> clazz, OnEventReceive onEventReceive) {
+        eventMap.put(clazz, onEventReceive);
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(clazz.getName());
+        if (contextRef.get() != null)
+            contextRef.get().registerReceiver(broadcastReceiver, intentFilter);
+
+        isRegister = true;
     }
 
 
@@ -45,33 +61,46 @@ public class BroadcastBus {
      *
      * @param map map for listeners
      */
-    public void register(Map<Class<?>, OnEventReceive> map) {
-
+    public synchronized void register(Map<Class<? extends BaseEvent>, OnEventReceive> map) {
         this.eventMap = map;
         IntentFilter intentFilter = new IntentFilter();
-        for (Map.Entry<Class<?>, OnEventReceive> event : eventMap.entrySet()) {
+        for (Map.Entry<Class<? extends BaseEvent>, OnEventReceive> event : eventMap.entrySet()) {
             intentFilter.addAction(event.getKey().getName());
         }
 
-        if (contextRef.get() != null && !isRegister)
+        if (contextRef.get() != null)
             contextRef.get().registerReceiver(broadcastReceiver, intentFilter);
 
         isRegister = true;
     }
 
     /**
-     * unregister the bus
+     * remove a bus event
+     *
+     * @param clazz the type of event
+     */
+    public void unRegister(Class<?> clazz) {
+        if (eventMap == null)
+            return;
+        if (eventMap.containsKey(clazz))
+            eventMap.remove(clazz);
+    }
+
+    /**
+     * unregister all bus event
      */
     public void unRegister() {
-        if (contextRef.get() != null && isRegister)
+        if (contextRef.get() != null && isRegister) {
             contextRef.get().unregisterReceiver(broadcastReceiver);
+        }
+
         isRegister = false;
     }
 
     private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            for (Map.Entry<Class<?>, OnEventReceive> event : eventMap.entrySet()) {
+            for (Map.Entry<Class<? extends BaseEvent>, OnEventReceive> event : eventMap.entrySet()) {
                 Class<?> key = event.getKey();
                 if (key == null)
                     return;

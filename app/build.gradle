@@ -26,5 +26,5 @@ dependencies {
     })
     compile 'com.android.support:appcompat-v7:25.2.0'
     testCompile 'junit:junit:4.12'
-    compile files('libs/broadcastbus-1.0.jar')
+    compile files('lib/broadcastbus-1.1.jar')
 }

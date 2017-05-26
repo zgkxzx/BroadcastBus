@@ -1,16 +1,13 @@
 package com.zgkxzx.broadcastbusdemo;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 
 import com.zgkxzx.lib.broadcastbus.BroadcastBus;
 import com.zgkxzx.lib.broadcastbus.OnEventReceive;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
     private final static String TAG = MainActivity.class.getSimpleName();
@@ -30,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void registerBus() {
+        /*
         Map<Class<?>, OnEventReceive> eventMap = new HashMap<>();
         eventMap.put(UserInfoEvent.class, new OnEventReceive<UserInfoEvent>() {
             @Override
@@ -44,6 +42,22 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         broadcastBus.register(eventMap);
+        */
+        broadcastBus.register(UserInfoEvent.class, new OnEventReceive<UserInfoEvent>() {
+            @Override
+            public void onEvent(UserInfoEvent userInfoEvent) {
+                Log.d(TAG, "UserInfoEvent onEvent - received: " + userInfoEvent.toString());
+            }
+        });
+
+        broadcastBus.register(LoginInfoEvent.class, new OnEventReceive<LoginInfoEvent>() {
+            @Override
+            public void onEvent(LoginInfoEvent loginInfoEvent) {
+                Log.d(TAG, "LoginInfoEvent onEvent - received: " + loginInfoEvent.toString());
+            }
+        });
+        //remove LoginInfoEvent
+        //broadcastBus.unRegister(LoginInfoEvent.class);
 
     }
 
