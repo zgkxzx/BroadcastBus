@@ -1,6 +1,6 @@
 ### Introduce
 
-This is a simple bus library based on android broadcast. We can use it very convenient.Messages that sent and received are marked by class name, which is in line with our actual engineering application.
+This is a simple bus library based on android broadcast. We can use it very convenient.Messages that are sent and received are marked by class name, which is in line with our actual engineering application.
 
 ### How to use
 
