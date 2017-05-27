@@ -56,9 +56,9 @@ You must unregister the bus event when is not used.
 
 ### Feedback
 
-You Have any questions and questions in the process of using to send the email to me.
+You have any questions to send email to me.Thanks.
 
-* email : zgkxzx@163.com
+* e-mail : zgkxzx@163.com
 * gmail : my.own.diy@gmail.com
 
 ### Me & Throught
